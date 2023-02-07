@@ -1,0 +1,24 @@
+ #################### JEU ####################
+#################### POST ####################
+{
+    "nomJeu": "loup garou noir gros",
+    "typeJeu": "Enfant"
+}
+
+{
+    "nomJeu": "loup garou noir gros",
+    "typeJeu": "Enfant"
+}
+
+
+ #################### ZONE ####################
+
+{
+    "nomZone": "GRENOBLE LA CITE",
+    "jeux": []
+}
+
+{
+    "nomZone": "MONTPELLIER PAS LA CITE",
+    "jeux": []
+}

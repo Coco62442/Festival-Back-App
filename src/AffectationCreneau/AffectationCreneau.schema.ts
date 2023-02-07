@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { Zone } from '../Zone/Zone.schema';
+import { Zone } from '../Zone/Schema/zone.schema';
 import { Benevole } from '../Benevole/Schema/Benevole.schema';
 
 

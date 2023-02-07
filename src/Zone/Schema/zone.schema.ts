@@ -1,15 +1,18 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { Jeu } from '../Jeux/Jeu.schema';
+import { Jeu } from '../../Jeu/Schema/jeu.schema';
 
+export type ZoneDocument = HydratedDocument<Zone>;
 
 @Schema()
 export class Zone {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'nomZone' })
+  @Prop()
   nomZone: String;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Jeu' })
+  @Prop([Jeu])
   jeux: Jeu[];
+
 }
 
 export const ZoneSchema = SchemaFactory.createForClass(Zone);

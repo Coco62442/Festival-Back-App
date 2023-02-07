@@ -1,17 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 import * as mongoose from 'mongoose';
+import { TypeJeu } from '../TypeJeu';
 
+export type JeuDocument = HydratedDocument<Jeu>;
 
 @Schema()
 export class Jeu {
 
-    //_id: Types.ObjectId;
-
     @Prop({required: true})
-    nom: string;
+    nomJeu: string;
     
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'TypeJeu' })
-    type: TypeJeu;
+    @Prop({ type: String, enum: TypeJeu })
+    typeJeu: TypeJeu;
+
 }
 
 export const JeuSchema = SchemaFactory.createForClass(Jeu);

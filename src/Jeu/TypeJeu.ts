@@ -1,4 +1,4 @@
-enum TypeJeu {
+export enum TypeJeu {
     enfant = "Enfant",
     famille = "Famille",
     ambiance = "Ambiance",
