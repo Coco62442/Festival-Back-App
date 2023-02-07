@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { Zone } from '../Zone/Schema/zone.schema';
-import { Benevole } from '../Benevole/Schema/Benevole.schema';
+import { Zone } from '../../Zone/Schema/zone.schema';
+import { Benevole } from '../../Benevole/Schema/benevole.schema';
 
 
 export type AffectationCreneauDocument = mongoose.HydratedDocument<AffectationCreneau>;
@@ -18,4 +18,4 @@ export class AffectationCreneau {
   benevoles: Benevole[];
 }
 
-export const AffectationCrenauSchema = SchemaFactory.createForClass(AffectationCreneau);
+export const AffectationCreneauSchema = SchemaFactory.createForClass(AffectationCreneau);
