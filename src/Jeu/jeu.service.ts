@@ -31,6 +31,8 @@ export class JeuService {
     });
   }
 
+  // FIND
+
   async findAll(): Promise<Jeu[]> {
     return this.jeuModel.find().exec()
     .catch(error => {
@@ -40,6 +42,20 @@ export class JeuService {
 
   async findOne(id: string): Promise<Jeu> {
     return this.jeuModel.findOne({ _id: id }).exec()
+    .catch(error => {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
+  }
+
+  async findJeuxByName(name: string): Promise<Jeu[]> {
+    return this.jeuModel.find({nomJeu: { $regex: '.*' + name + '.*' } })
+    .catch(error => {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
+  }
+
+  async findJeuxByType(type: string): Promise<Jeu[]> {
+    return this.jeuModel.find({typeJeu: { $regex: type} })
     .catch(error => {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     });

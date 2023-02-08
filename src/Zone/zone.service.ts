@@ -68,4 +68,12 @@ export class ZoneService {
     return await this.zoneModel.findById(zoneId).exec();
   }
 
+  async removeJeuFromZone(zoneId: string, jeuId: string): Promise<Zone> {
+    const updatedZone = await this.zoneModel.updateOne({ _id: zoneId }, { $pull: { jeux: { _id: jeuId } } });
+    if(updatedZone.modifiedCount===0){
+      throw new HttpException('Zone not updated', HttpStatus.NOT_FOUND);
+    }
+    return await this.zoneModel.findById(zoneId).exec();
+  }
+
 }

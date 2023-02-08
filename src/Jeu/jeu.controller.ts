@@ -7,16 +7,6 @@ import { Jeu } from './Schema/jeu.schema';
 export class JeuController {
   constructor(private readonly jeuService: JeuService) {}
 
-  @Get()
-  getAllJeux(): Promise<Jeu[]> {
-    return this.jeuService.findAll();
-  }
-
-  @Get(":id")
-  getJeuById(@Param('id') id: string): Promise<Jeu> {
-    return this.jeuService.findOne(id);
-  }
-
   @Post()
   createJeu(@Body() newJeu: JeuDto): void {
     this.jeuService.create(newJeu);
@@ -30,5 +20,27 @@ export class JeuController {
   @Delete(":id")
   deleteJeu(@Param('id') id: string): void {
     this.jeuService.delete(id);
+  }
+
+  // GETTER
+  
+  @Get()
+  getAllJeux(): Promise<Jeu[]> {
+    return this.jeuService.findAll();
+  }
+
+  @Get(":id")
+  getJeuById(@Param('id') id: string): Promise<Jeu> {
+    return this.jeuService.findOne(id);
+  }
+
+  @Get("/byName/:name")
+  getJeuxByName(@Param('name') name: string): Promise<Jeu[]> {
+    return this.jeuService.findJeuxByName(name);
+  }
+
+  @Get("/byType/:type")
+  getJeuxByType(@Param('type') type: string): Promise<Jeu[]> {
+    return this.jeuService.findJeuxByType(type);
   }
 }

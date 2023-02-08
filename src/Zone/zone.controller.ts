@@ -33,7 +33,7 @@ export class ZoneController {
     this.zoneService.delete(id);
   }
 
-  @Get("/ZoneByJeu/:idJeu")
+  @Get("/zoneByJeu/:idJeu")
   getZoneByJeuId(@Param('idJeu') idJeu: string): Promise<Zone[]> {
     return this.zoneService.findZonesByJeuId(idJeu);
   }
@@ -41,6 +41,11 @@ export class ZoneController {
   @Put(':zoneId/addJeu/:jeuId')
   async addJeuToZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string) {
     return this.zoneService.addJeuToZone(zoneId, jeuId);
+  }
+
+  @Put(':zoneId/removeJeu/:jeuId')
+  async removeJeuFromZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string) {
+    return this.zoneService.removeJeuFromZone(zoneId, jeuId);
   }
 
 }
