@@ -3,7 +3,7 @@ import { BenevoleService } from './benevole.service';
 import { BenevoleDto } from './BenevoleDTO/benevole.dto';
 import { Benevole } from './Schema/benevole.schema';
 
-@Controller()
+@Controller('benevole')
 export class BenevoleController {
   constructor(private readonly benevoleService: BenevoleService) {}
 

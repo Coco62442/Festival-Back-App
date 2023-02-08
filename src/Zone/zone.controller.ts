@@ -2,10 +2,11 @@ import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common'
 import { ZoneService } from './zone.service';
 import { ZoneDto } from './ZoneDTO/zone.dto';
 import { Zone } from './Schema/zone.schema';
+import { JeuService } from 'src/Jeu/jeu.service';
 
 @Controller('zone')
 export class ZoneController {
-  constructor(private readonly zoneService: ZoneService) {}
+  constructor(private readonly zoneService: ZoneService, private readonly jeuService: JeuService) {}
 
   @Get()
   getAllZones(): Promise<Zone[]> {
@@ -31,4 +32,15 @@ export class ZoneController {
   deleteZone(@Param('id') id: string): void {
     this.zoneService.delete(id);
   }
+
+  @Get("/ZoneByJeu/:idJeu")
+  getZoneByJeuId(@Param('idJeu') idJeu: string): Promise<Zone[]> {
+    return this.zoneService.findZonesByJeuId(idJeu);
+  }
+
+  @Put(':zoneId/addJeu/:jeuId')
+  async addJeuToZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string) {
+    return this.zoneService.addJeuToZone(zoneId, jeuId);
+  }
+
 }

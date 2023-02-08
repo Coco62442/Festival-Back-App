@@ -3,7 +3,7 @@ import { AffectationCreneauService } from './affectationCreneau.service';
 import { AffectationCreneauDto } from './AffectationCreneauDTO/affectationCreneau.dto';
 import { AffectationCreneau } from './Schema/affectationCreneau.schema';
 
-@Controller()
+@Controller('affectionCreneau')
 export class AffectationCreneauController {
   constructor(private readonly affectationCreneauService: AffectationCreneauService) {}
 

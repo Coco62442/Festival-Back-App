@@ -22,3 +22,17 @@
     "nomZone": "MONTPELLIER PAS LA CITE",
     "jeux": []
 }
+
+{
+    "nomZone": "kyzylorda du Kazakhstan",
+    "jeux": []
+}
+
+ #################### TEST ####################
+idJeu
+63e27a77180ff99257625f5a
+63e2e14dfd4d3b76ae95fd32
+63e27a45180ff99257625f57
+id Zone
+63e28ac0fc2e96608ec308a9
+63e2dd4f16e95f7fe2800d75

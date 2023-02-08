@@ -7,7 +7,7 @@ import { Jeu, JeuSchema } from './Schema/jeu.schema';
 @Module({
   imports: [MongooseModule.forFeature([{ name: Jeu.name, schema: JeuSchema }])],
   controllers: [JeuController],
-  providers: [JeuService],
+  providers: [JeuService]
 })
 
 export class JeuModule {}

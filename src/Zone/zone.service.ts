@@ -1,12 +1,14 @@
 import { Model } from 'mongoose';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Zone, ZoneDocument } from './Schema/zone.schema';
 import { ZoneDto } from './ZoneDTO/zone.dto';
+import { Jeu, JeuDocument } from 'src/Jeu/Schema/jeu.schema';
 
 @Injectable()
 export class ZoneService {
-  constructor(@InjectModel(Zone.name) private zoneModel: Model<ZoneDocument>) {}
+  constructor(@InjectModel(Zone.name) private zoneModel: Model<ZoneDocument>,
+              @InjectModel(Jeu.name) private jeuModel: Model<JeuDocument>) {}
 
   async create(CreateZoneDto: ZoneDto): Promise<Zone> {
     const createdZone = new this.zoneModel(CreateZoneDto);
@@ -43,6 +45,27 @@ export class ZoneService {
     .catch(error => {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     });
+  }
+
+  async findZonesByJeuId(idJeu: string): Promise<Zone[]> {
+    return this.zoneModel.find({ jeux: { $elemMatch: { _id: idJeu } } });
+  }
+
+  async addJeuToZone(zoneId: string, jeuId: string): Promise<Zone> {
+    const zone = await this.zoneModel.findById(zoneId);
+    if (!zone) {
+      throw new NotFoundException('Zone not found');
+    }
+    const jeu = await this.jeuModel.findById(jeuId);
+    if (!jeu) {
+      throw new NotFoundException('Jeu not found');
+    }
+    zone.jeux.push(jeu);
+    const updatedZone = await this.zoneModel.updateOne({ _id: zoneId }, zone);
+    if(updatedZone.modifiedCount===0){
+      throw new HttpException('Zone not found for update', HttpStatus.NOT_FOUND);
+    }
+    return await this.zoneModel.findById(zoneId).exec();
   }
 
 }
