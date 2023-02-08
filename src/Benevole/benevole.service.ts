@@ -1,9 +1,8 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Benevole, BenevoleDocument } from './Schema/Benevole.schema';
+import { Benevole, BenevoleDocument } from './Schema/benevole.schema';
 import { BenevoleDto } from './BenevoleDTO/benevole.dto';
-import { BenevoleUpdateDto } from './BenevoleDTO/benevole.update.dto';
 
 @Injectable()
 export class BenevoleService {
@@ -14,9 +13,13 @@ export class BenevoleService {
     return createdBenevole.save();
   }
 
-  async update(id: string, benevole: BenevoleUpdateDto): Promise<Benevole> {
+  async update(id: string, benevole: BenevoleDto): Promise<Benevole> {
     const updatedBenevoleDto = new this.benevoleModel(benevole);
-    return updatedBenevoleDto.updateOne({ _id: id }, benevole);
+    // TODO : faire en sorte que l'update update seulement les champs qui ont été modifiés
+    
+    updatedBenevoleDto.valider = true;
+    console.log(updatedBenevoleDto)
+    return updatedBenevoleDto.updateOne({ _id: id }, benevole).exec();
   }
 
   async delete(id: string): Promise<any> {

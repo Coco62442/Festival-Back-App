@@ -13,4 +13,6 @@ export class BenevoleDto {
 
   mdpBenevole: string;
 
+  valider: boolean = false;
+
 }
