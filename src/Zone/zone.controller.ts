@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, HttpException } from '@nestjs/common';
 import { ZoneService } from './zone.service';
 import { ZoneDto } from './ZoneDTO/zone.dto';
 import { Zone } from './Schema/zone.schema';
@@ -10,42 +10,67 @@ export class ZoneController {
 
   @Get()
   getAllZones(): Promise<Zone[]> {
-    return this.zoneService.findAll();
+    return this.zoneService.findAll()
+    .catch(error => {
+      console.log(error.message);
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   @Get(":id")
   getZoneById(@Param('id') id: string): Promise<Zone> {
-    return this.zoneService.findOne(id);
+    return this.zoneService.findOne(id)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   @Post()
-  createZone(@Body() newZone: ZoneDto): void {
-    this.zoneService.create(newZone);
+  createZone(@Body() newZone: ZoneDto): Promise<Zone> {
+    return this.zoneService.create(newZone)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   @Put(":id")
   updateZone(@Param('id') id: string, @Body() zone: ZoneDto): Promise<Zone> {
-    return this.zoneService.update(id, zone);
+    return this.zoneService.update(id, zone)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   @Delete(":id")
   deleteZone(@Param('id') id: string): void {
-    this.zoneService.delete(id);
+    this.zoneService.delete(id)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   @Get("/zoneByJeu/:idJeu")
   getZoneByJeuId(@Param('idJeu') idJeu: string): Promise<Zone[]> {
-    return this.zoneService.findZonesByJeuId(idJeu);
+    return this.zoneService.findZonesByJeuId(idJeu)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   @Put(':zoneId/addJeu/:jeuId')
   async addJeuToZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string) {
-    return this.zoneService.addJeuToZone(zoneId, jeuId);
+    return this.zoneService.addJeuToZone(zoneId, jeuId)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   @Put(':zoneId/removeJeu/:jeuId')
   async removeJeuFromZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string) {
-    return this.zoneService.removeJeuFromZone(zoneId, jeuId);
+    return this.zoneService.removeJeuFromZone(zoneId, jeuId)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
 }

@@ -6,8 +6,5 @@ export class AffectationCreneauDto {
     // TODO : class-validator IsBoolean IsEmail etc
     heureDebut: Date
     
-    zone: Zone;
-    
-    benevole: Benevole;
-  
+    idZone: string;
   }

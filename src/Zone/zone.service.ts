@@ -4,6 +4,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Zone, ZoneDocument } from './Schema/zone.schema';
 import { ZoneDto } from './ZoneDTO/zone.dto';
 import { Jeu, JeuDocument } from 'src/Jeu/Schema/jeu.schema';
+import { validate, ValidationError } from 'class-validator';
+
 
 @Injectable()
 export class ZoneService {
@@ -12,14 +14,29 @@ export class ZoneService {
 
   async create(CreateZoneDto: ZoneDto): Promise<Zone> {
     const createdZone = new this.zoneModel(CreateZoneDto);
-    return createdZone.save()
+
+    const errors: ValidationError[] = await validate(createdZone);
+    if (errors.length > 0) {
+      const errorMessage = errors.map(error => Object.values(error.constraints)).join(', ');
+      throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    return await createdZone.save()
     .catch(error => {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     });
   }
 
   async update(id: string, zone: ZoneDto): Promise<Zone> {
-    const updatedZone = await this.zoneModel.updateOne({ _id: id }, zone);
+    const zoneToUpdate = new this.zoneModel(zone);
+
+    const errors: ValidationError[] = await validate(zoneToUpdate);
+    if (errors.length > 0) {
+      const errorMessage = errors.map(error => Object.values(error.constraints)).join(', ');
+      throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    const updatedZone = await this.zoneModel.updateOne({ _id: id }, zoneToUpdate);
     if(updatedZone.modifiedCount===0){
       throw new HttpException('Zone not found', HttpStatus.NOT_FOUND);
     }

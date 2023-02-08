@@ -18,8 +18,18 @@ export class BenevoleService {
     // TODO : faire en sorte que l'update update seulement les champs qui ont été modifiés
     
     updatedBenevoleDto.valider = true;
-    console.log(updatedBenevoleDto)
     return updatedBenevoleDto.updateOne({ _id: id }, benevole).exec();
+
+    // return this.affectationCreneauModel.findByIdAndUpdate(id, { ...affectationCreneau, benevoles }, { new: true }).exec()
+    // .then(affectation => {
+    //   if (!affectation) {
+    //     throw new HttpException('Affectation not found', HttpStatus.NOT_FOUND);
+    //   }
+    //   return affectation;
+    // })
+    // .catch(error => {
+    //   throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    // });
   }
 
   async delete(id: string): Promise<any> {
