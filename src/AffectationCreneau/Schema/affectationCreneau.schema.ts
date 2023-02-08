@@ -9,12 +9,12 @@ export type AffectationCreneauDocument = mongoose.HydratedDocument<AffectationCr
 @Schema()
 export class AffectationCreneau {
   @Prop({required: true})
-  heyreDebut: Date;
+  heureDebut: Date;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Zone', required: true })
   zone: Zone;
 
-  @Prop({ type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Benevole'}], required: true })
+  @Prop([Benevole])
   benevoles: Benevole[];
 }
 
