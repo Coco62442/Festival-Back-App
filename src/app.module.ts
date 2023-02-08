@@ -5,11 +5,12 @@ import { AppService } from './app.service';
 import { BenevoleModule } from './Benevole/benevole.module';
 import { JeuModule } from './Jeu/jeu.module';
 import { ZoneModule } from './Zone/zone.module';
+import { AffectationCreneauModule } from './AffectationCreneau/affectationCreneau.module';
 
 
 @Module({
   imports: [MongooseModule.forRoot('mongodb+srv://root:root@festivalcluster.iv7ihff.mongodb.net/?retryWrites=true&w=majority'),
-  BenevoleModule, JeuModule, ZoneModule],
+  BenevoleModule, JeuModule, ZoneModule, AffectationCreneauModule],
   controllers: [AppController],
   providers: [AppService],
 })

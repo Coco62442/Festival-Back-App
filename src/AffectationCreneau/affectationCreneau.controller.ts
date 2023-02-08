@@ -3,7 +3,7 @@ import { AffectationCreneauService } from './affectationCreneau.service';
 import { AffectationCreneauDto } from './AffectationCreneauDTO/affectationCreneau.dto';
 import { AffectationCreneau } from './Schema/affectationCreneau.schema';
 
-@Controller('affectionCreneau')
+@Controller('affectationCreneau')
 export class AffectationCreneauController {
   constructor(private readonly affectationCreneauService: AffectationCreneauService) {}
 
@@ -12,7 +12,17 @@ export class AffectationCreneauController {
     return this.affectationCreneauService.findAll();
   }
 
-  @Get(":id")
+  @Get('ByCreneau')
+  getAffectationCreneauByCreneau(@Body() creneau: Date): Promise<AffectationCreneau[]> {
+    return this.affectationCreneauService.findByCreneau(creneau);
+  }
+
+  @Get('ByZone:idZone')
+  getAffectationCreneauByZone(@Param('idZone') idZone : string): Promise<AffectationCreneau[]> {
+    return this.affectationCreneauService.findByZone(idZone);
+  }
+
+  @Get(':id')
   getAffectationCreneauById(@Param('id') id: string): Promise<AffectationCreneau> {
     return this.affectationCreneauService.findOne(id);
   }
@@ -22,12 +32,12 @@ export class AffectationCreneauController {
     this.affectationCreneauService.create(newAffectationCreneau);
   }
 
-  @Put(":id")
+  @Put(':id')
   updateAffectationCreneau(@Param('id') id: string, @Body() affectationCreneau: AffectationCreneauDto): void {
     this.affectationCreneauService.update(id, affectationCreneau);
   }
 
-  @Delete(":id")
+  @Delete(':id')
   deleteAffectationCreneau(@Param('id') id: string): void {
     this.affectationCreneauService.delete(id);
   }

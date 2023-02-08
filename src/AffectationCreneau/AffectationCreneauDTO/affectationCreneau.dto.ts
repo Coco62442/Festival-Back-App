@@ -4,10 +4,10 @@ import { Zone } from "src/Zone/Schema/zone.schema";
 export class AffectationCreneauDto {
 
     // TODO : class-validator IsBoolean IsEmail etc
-    heyreDebut: Date
+    heureDebut: Date
     
     zone: Zone;
     
-    benevoles: Benevole[];
+    benevole: Benevole;
   
   }

@@ -12,7 +12,7 @@ export class BenevoleController {
     return this.benevoleService.findAll();
   }
 
-  @Get(":id")
+  @Get(':id')
   getBenevoleById(@Param('id') id: string): Promise<Benevole> {
     return this.benevoleService.findOne(id);
   }
@@ -22,12 +22,12 @@ export class BenevoleController {
     this.benevoleService.create(newBenevole);
   }
 
-  @Put(":id")
+  @Put(':id')
   updateBenevole(@Param('id') id: string, @Body() benevole: BenevoleDto): void {
     this.benevoleService.update(id, benevole);
   }
 
-  @Delete(":id")
+  @Delete(':id')
   deleteBenevole(@Param('id') id: string): void {
     this.benevoleService.delete(id);
   }
