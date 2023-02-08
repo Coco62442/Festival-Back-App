@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Jeu, JeuDocument } from './Schema/jeu.schema';
 import { JeuDto } from './JeuDTO/jeu.dto';
@@ -10,24 +10,39 @@ export class JeuService {
 
   async create(CreateJeuDto: JeuDto): Promise<Jeu> {
     const createdJeu = new this.jeuModel(CreateJeuDto);
-    return createdJeu.save();
+    return createdJeu.save()
+      .catch(error => {
+        throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+      });
   }
 
   async update(id: string, jeu: JeuDto): Promise<Jeu> {
-    const updatedJeu = new this.jeuModel(jeu);
-    return updatedJeu.updateOne({ _id: id }, jeu);
+    const updatedJeu = await this.jeuModel.updateOne({ _id: id }, jeu);
+    if (updatedJeu.modifiedCount === 0) {
+      throw new HttpException('Jeu not found', HttpStatus.NOT_FOUND);
+    }
+    return await this.jeuModel.findById(id).exec();
   }
 
   async delete(id: string): Promise<any> {
-    return this.jeuModel.deleteOne({ _id: id }).exec();
+    return this.jeuModel.deleteOne({ _id: id }).exec()
+    .catch(error => {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
   }
 
   async findAll(): Promise<Jeu[]> {
-    return this.jeuModel.find().exec();
+    return this.jeuModel.find().exec()
+    .catch(error => {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
   }
 
   async findOne(id: string): Promise<Jeu> {
-    return this.jeuModel.findOne({ _id: id }).exec();
+    return this.jeuModel.findOne({ _id: id }).exec()
+    .catch(error => {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
   }
 
 }

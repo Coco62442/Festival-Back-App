@@ -23,8 +23,8 @@ export class JeuController {
   }
 
   @Put(":id")
-  updateJeu(@Param('id') id: string, @Body() jeu: JeuDto): void {
-    this.jeuService.update(id, jeu);
+  updateJeu(@Param('id') id: string, @Body() jeu: JeuDto): Promise<Jeu> {
+    return this.jeuService.update(id, jeu);
   }
 
   @Delete(":id")

@@ -23,8 +23,8 @@ export class ZoneController {
   }
 
   @Put(":id")
-  updateZone(@Param('id') id: string, @Body() zone: ZoneDto): void {
-    this.zoneService.update(id, zone);
+  updateZone(@Param('id') id: string, @Body() zone: ZoneDto): Promise<Zone> {
+    return this.zoneService.update(id, zone);
   }
 
   @Delete(":id")
