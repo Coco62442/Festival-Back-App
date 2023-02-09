@@ -40,11 +40,14 @@ export class ZoneService {
     if(updatedZone.modifiedCount===0){
       throw new HttpException('Zone not found', HttpStatus.NOT_FOUND);
     }
-    return await this.zoneModel.findById(id).exec();
+    return await this.zoneModel.findById(id).exec()
+    .catch(error => {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
   }
 
-  async delete(id: string): Promise<any> {
-    return this.zoneModel.deleteOne({ _id: id }).exec()
+  async delete(id: string): Promise<void> {
+    this.zoneModel.deleteOne({ _id: id }).exec()
     .catch(error => {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     });

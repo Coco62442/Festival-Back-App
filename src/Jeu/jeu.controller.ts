@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, HttpException } from '@nestjs/common';
 import { JeuService } from './jeu.service';
 import { JeuDto } from './JeuDTO/jeu.dto';
 import { Jeu } from './Schema/jeu.schema';
@@ -8,39 +8,60 @@ export class JeuController {
   constructor(private readonly jeuService: JeuService) {}
 
   @Post()
-  createJeu(@Body() newJeu: JeuDto): void {
-    this.jeuService.create(newJeu);
+  createJeu(@Body() newJeu: JeuDto): Promise<Jeu> {
+    return this.jeuService.create(newJeu)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   @Put(":id")
   updateJeu(@Param('id') id: string, @Body() jeu: JeuDto): Promise<Jeu> {
-    return this.jeuService.update(id, jeu);
+    return this.jeuService.update(id, jeu)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   @Delete(":id")
-  deleteJeu(@Param('id') id: string): void {
-    this.jeuService.delete(id);
+  deleteJeu(@Param('id') id: string): Promise<void> {
+    return this.jeuService.delete(id)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   // GETTER
   
   @Get()
   getAllJeux(): Promise<Jeu[]> {
-    return this.jeuService.findAll();
+    return this.jeuService.findAll()
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   @Get(":id")
   getJeuById(@Param('id') id: string): Promise<Jeu> {
-    return this.jeuService.findOne(id);
+    return this.jeuService.findOne(id)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   @Get("/byName/:name")
   getJeuxByName(@Param('name') name: string): Promise<Jeu[]> {
-    return this.jeuService.findJeuxByName(name);
+    return this.jeuService.findJeuxByName(name)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 
   @Get("/byType/:type")
   getJeuxByType(@Param('type') type: string): Promise<Jeu[]> {
-    return this.jeuService.findJeuxByType(type);
+    return this.jeuService.findJeuxByType(type)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
   }
 }

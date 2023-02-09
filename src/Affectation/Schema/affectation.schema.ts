@@ -4,10 +4,10 @@ import { Zone } from '../../Zone/Schema/zone.schema';
 import { Benevole } from '../../Benevole/Schema/benevole.schema';
 
 
-export type AffectationCreneauDocument = mongoose.HydratedDocument<AffectationCreneau>;
+export type AffectationDocument = mongoose.HydratedDocument<Affectation>;
 
 @Schema()
-export class AffectationCreneau {
+export class Affectation {
   @Prop({required: true})
   heureDebut: Date;
 
@@ -18,4 +18,4 @@ export class AffectationCreneau {
   benevoles: Benevole[];
 }
 
-export const AffectationCreneauSchema = SchemaFactory.createForClass(AffectationCreneau);
+export const AffectationSchema = SchemaFactory.createForClass(Affectation);

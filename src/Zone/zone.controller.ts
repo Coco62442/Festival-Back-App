@@ -42,8 +42,8 @@ export class ZoneController {
   }
 
   @Delete(":id")
-  deleteZone(@Param('id') id: string): void {
-    this.zoneService.delete(id)
+  deleteZone(@Param('id') id: string): Promise<void> {
+    return this.zoneService.delete(id)
     .catch(error => {
       throw new HttpException(error.message, error.status);
     });
@@ -58,7 +58,7 @@ export class ZoneController {
   }
 
   @Put(':zoneId/addJeu/:jeuId')
-  async addJeuToZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string) {
+  async addJeuToZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string): Promise<Zone> {
     return this.zoneService.addJeuToZone(zoneId, jeuId)
     .catch(error => {
       throw new HttpException(error.message, error.status);
@@ -66,7 +66,7 @@ export class ZoneController {
   }
 
   @Put(':zoneId/removeJeu/:jeuId')
-  async removeJeuFromZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string) {
+  async removeJeuFromZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string): Promise<Zone> {
     return this.zoneService.removeJeuFromZone(zoneId, jeuId)
     .catch(error => {
       throw new HttpException(error.message, error.status);

@@ -2,11 +2,11 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 
-export type AdminDocuement = HydratedDocument<Admin>;
+export type AdminDocument = HydratedDocument<Admin>;
 
 @Schema()
 export class Admin {
-  @Prop({required: true})
+  @Prop({required: true, unique: true})
   mailAdmin: string;
 
   @Prop({required: true})

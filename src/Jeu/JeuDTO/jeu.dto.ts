@@ -1,9 +1,15 @@
 import { TypeJeu } from "../TypeJeu";
+import { IsNotEmpty, IsString } from "class-validator";
+
 
 export class JeuDto {
 
-    nomJeu: string;
-  
-    typeJeu: TypeJeu;
+  @IsString()
+  @IsNotEmpty()
+  nomJeu: string;
+
+  @IsNotEmpty()
+  @IsString()
+  typeJeu: TypeJeu;
   
   }
