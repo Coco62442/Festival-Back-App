@@ -10,8 +10,10 @@ import { AuthModule } from './Authentification/auth.module';
 
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb+srv://root:root@festivalcluster.iv7ihff.mongodb.net/?retryWrites=true&w=majority'),
-  BenevoleModule, JeuModule, ZoneModule, AffectationModule, AuthModule],
+  imports: [
+    MongooseModule.forRoot('mongodb+srv://root:root@festivalcluster.iv7ihff.mongodb.net/Festival?retryWrites=true&w=majority'),
+    BenevoleModule, JeuModule, ZoneModule, AffectationModule, AuthModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

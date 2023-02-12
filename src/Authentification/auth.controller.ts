@@ -6,15 +6,15 @@ import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly connectionService: AuthService) {}
+    constructor(private readonly authService: AuthService) {}
 
     @Post()
     async register(@Body() userData: BenevoleDto): Promise<Partial<Benevole>> {
-        return this.connectionService.register(userData);
+        return this.authService.register(userData);
     }
 
     @Post('login')
     async login(@Body() userData: {email: string, mdp: string}) {
-        return this.connectionService.login(userData.email, userData.mdp);
+        return this.authService.login(userData.email, userData.mdp);
     }
 }

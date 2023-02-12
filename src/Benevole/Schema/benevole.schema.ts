@@ -4,11 +4,10 @@ import { HydratedDocument } from 'mongoose';
 
 export type BenevoleDocument = HydratedDocument<Benevole>;
 
-@Schema()
+@Schema({ collection: "Benevole"})
 export class Benevole {
 
-  @Prop()
-  _id: string;
+  _id: any;
   
   @Prop({required: true})
   prenomBenevole: string;

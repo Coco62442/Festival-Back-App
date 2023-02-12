@@ -1,11 +1,12 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guards';
 import { BenevoleService } from './benevole.service';
 import { BenevoleDto } from './BenevoleDTO/benevole.dto';
 import { Benevole } from './Schema/benevole.schema';
 
 @Controller('benevole')
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(JwtAuthGuard)
 export class BenevoleController {
   constructor(private readonly benevoleService: BenevoleService) {}
 
@@ -25,8 +26,8 @@ export class BenevoleController {
     });
   }
 
-  @Get('nouveauBenevole')
-  getNewBenevole(): Promise<Benevole[]> {
+  @Get('nouveaux/nonvalider')
+  getNewsBenevoles(): Promise<Benevole[]> {
     return this.benevoleService.newBenevoles()
     .catch(error => {
       throw new HttpException(error.message, error.status)

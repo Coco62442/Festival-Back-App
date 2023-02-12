@@ -1,9 +1,8 @@
-import { IsString, IsNotEmpty, IsEmail, IsPhoneNumber, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsEmail, IsPhoneNumber, IsOptional, IsEmpty } from 'class-validator';
 
 export class BenevoleDto {
 
-  @IsOptional()
-  @IsString()
+  @IsEmpty()
   _id?: string;
 
   @IsString()

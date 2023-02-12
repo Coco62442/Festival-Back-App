@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, HttpException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, UseGuards } from '@nestjs/common';
 import { ZoneService } from './zone.service';
 import { ZoneDto } from './ZoneDTO/zone.dto';
 import { Zone } from './Schema/zone.schema';
 import { JeuService } from 'src/Jeu/jeu.service';
+import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guards';
 
 @Controller('zone')
+@UseGuards(JwtAuthGuard)
 export class ZoneController {
   constructor(private readonly zoneService: ZoneService, private readonly jeuService: JeuService) {}
 
@@ -12,7 +14,6 @@ export class ZoneController {
   getAllZones(): Promise<Zone[]> {
     return this.zoneService.findAll()
     .catch(error => {
-      console.log(error.message);
       throw new HttpException(error.message, error.status);
     });
   }

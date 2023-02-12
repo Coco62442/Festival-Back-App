@@ -35,8 +35,6 @@ export class AuthService {
 
   async login(email: string, mdp: string) {
     // TODO: Change this secret
-    const salt = await bcrypt.genSalt(10)
-    mdp = await bcrypt.hash(mdp, salt)
 
     return await this.benevoleService.verifLogin(email, mdp)
     .then(async benevole => {

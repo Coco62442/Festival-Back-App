@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, HttpException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guards';
 import { AffectationService } from './affectation.service';
 import { AffectationDto } from './AffectationDTO/affectation.dto';
 import { Affectation } from './Schema/affectation.schema';
 
 @Controller('affectation')
+@UseGuards(JwtAuthGuard)
 export class AffectationController {
   constructor(private readonly affectationService: AffectationService) {}
 

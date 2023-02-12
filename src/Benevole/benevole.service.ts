@@ -6,6 +6,7 @@ import { BenevoleDto } from './BenevoleDTO/benevole.dto';
 import { validate, ValidationError } from 'class-validator';
 import * as bcrypt from 'bcrypt';
 
+
 @Injectable()
 export class BenevoleService {
   constructor(@InjectModel(Benevole.name) private benevoleModel: Model<BenevoleDocument>) {}
@@ -21,7 +22,6 @@ export class BenevoleService {
     try {
       return await createdBenevole.save()
       .then(benevole => {
-        console.log(benevole)
         return benevole
       });
     } catch (error) {
@@ -64,21 +64,22 @@ export class BenevoleService {
   }
 
   async findAll(): Promise<Benevole[]> {
-    return this.benevoleModel.find({valider: true}).exec()
+    // TODO : ajouter {valider: true}
+    return this.benevoleModel.find({}, {mdpBenevole: 0}).exec()
     .catch(error => {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     });
   }
 
   async findOne(id: string): Promise<Benevole> {
-    return this.benevoleModel.findOne({ _id: id }).exec()
+    return this.benevoleModel.findOne({ _id: id }).lean().exec()
     .catch(error => {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     });
   }
 
   async newBenevoles(): Promise<Benevole[]> {
-    return this.benevoleModel.find({valider: false}).exec()
+    return this.benevoleModel.find({valider: false}, {mdpBenevole: 0}).exec()
     .catch(error => {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     });
@@ -97,13 +98,16 @@ export class BenevoleService {
     });
   }
 
-  async verifLogin(email: string, mdp: string): Promise<Partial<Benevole>> {
+  async verifLogin(email: string, mdp: string) {
     try {
       const benevole = await this.benevoleModel.findOne({emailBenevole: email}).exec();
+
       if (!benevole) {
         throw new HttpException('L\'identifiant ou le mot de passe est invalide', HttpStatus.NOT_FOUND);
       }
-      if (!bcrypt.compare(mdp, benevole.mdpBenevole)) {
+      const isPasswordValid = await bcrypt.compare(mdp, benevole.mdpBenevole);
+
+      if (!isPasswordValid) {
         throw new HttpException('L\'identifiant ou le mot de passe est invalide', HttpStatus.NOT_FOUND);
       }
       // TODO: décommenter lorsque admin sera bien implémenté

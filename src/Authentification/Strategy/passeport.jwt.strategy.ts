@@ -1,7 +1,6 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { HttpException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { Benevole } from 'src/Benevole/Schema/benevole.schema';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { BenevoleService } from 'src/Benevole/benevole.service';
 
 @Injectable()
@@ -19,14 +18,20 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: Partial<Benevole>) {
-    await this.BenevoleService.findOne(payload.emailBenevole)
+  async validate(payload: any) {
+    return await this.BenevoleService.findOne(payload.benevole._id)
     .then(benevole => {
-        const { mdpBenevole, ...result } = benevole;
-        return result;
+      return {
+        _id: benevole._id,
+        nomBenevole: benevole.nomBenevole,
+        prenomBenevole: benevole.prenomBenevole,
+        emailBenevole: benevole.emailBenevole,
+        telBenevole: benevole.telBenevole,
+        description: benevole.description
+      };
     })
     .catch(error => {
-        throw new UnauthorizedException();
+      throw new UnauthorizedException();
     });    
   }
 }
