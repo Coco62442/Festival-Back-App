@@ -1,6 +1,10 @@
-import { IsString, IsNotEmpty, IsEmail, IsPhoneNumber } from 'class-validator';
+import { IsString, IsNotEmpty, IsEmail, IsPhoneNumber, IsOptional } from 'class-validator';
 
 export class BenevoleDto {
+
+  @IsOptional()
+  @IsString()
+  _id?: string;
 
   @IsString()
   @IsNotEmpty()
@@ -15,10 +19,12 @@ export class BenevoleDto {
   @IsNotEmpty()
   emailBenevole: string;
 
+  @IsOptional()
   @IsString()
-  @IsPhoneNumber("FR")
+  @IsPhoneNumber()
   telBenevole?: string;
 
+  @IsOptional()
   @IsString()
   description?: string;
 

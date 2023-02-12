@@ -8,5 +8,6 @@ import { Benevole, BenevoleSchema } from './Schema/benevole.schema';
   imports: [MongooseModule.forFeature([{ name: Benevole.name, schema: BenevoleSchema }])],
   controllers: [BenevoleController],
   providers: [BenevoleService],
+  exports: [BenevoleService]
 })
 export class BenevoleModule {}

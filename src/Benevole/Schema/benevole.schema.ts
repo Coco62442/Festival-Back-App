@@ -6,6 +6,10 @@ export type BenevoleDocument = HydratedDocument<Benevole>;
 
 @Schema()
 export class Benevole {
+
+  @Prop()
+  _id: string;
+  
   @Prop({required: true})
   prenomBenevole: string;
 

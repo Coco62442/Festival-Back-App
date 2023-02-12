@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, HttpException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { BenevoleService } from './benevole.service';
 import { BenevoleDto } from './BenevoleDTO/benevole.dto';
 import { Benevole } from './Schema/benevole.schema';
 
 @Controller('benevole')
+@UseGuards(AuthGuard('jwt'))
 export class BenevoleController {
   constructor(private readonly benevoleService: BenevoleService) {}
 
@@ -50,6 +52,14 @@ export class BenevoleController {
   @Delete(':id')
   deleteBenevole(@Param('id') id: string): Promise<void> {
     return this.benevoleService.delete(id)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
+  }
+
+  @Put('validate/:id')
+  validateBenevole(@Param('id') id: string): Promise<Benevole> {
+    return this.benevoleService.validateBenevole(id)
     .catch(error => {
       throw new HttpException(error.message, error.status);
     });
