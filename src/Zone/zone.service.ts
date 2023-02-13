@@ -29,18 +29,24 @@ export class ZoneService {
 
   async update(id: string, zone: ZoneDto): Promise<Zone> {
     const zoneToUpdate = new this.zoneModel(zone);
-
     const errors: ValidationError[] = await validate(zoneToUpdate);
     if (errors.length > 0) {
       const errorMessage = errors.map(error => Object.values(error.constraints)).join(', ');
       throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
-    const updatedZone = await this.zoneModel.updateOne({ _id: id }, zoneToUpdate);
-    if(updatedZone.modifiedCount===0){
-      throw new HttpException('Zone not found', HttpStatus.NOT_FOUND);
-    }
     return await this.zoneModel.findById(id).exec()
+    .then(zone => {
+      if (!zone) {
+        throw new HttpException('Zone not found', HttpStatus.NOT_FOUND);
+      }
+
+      zoneToUpdate.nomZone = zoneToUpdate.nomZone ? zoneToUpdate.nomZone : zone.nomZone;
+      zoneToUpdate.jeux = zoneToUpdate.jeux ? zoneToUpdate.jeux : zone.jeux;
+      zoneToUpdate._id = zone._id;
+
+      return this.zoneModel.findByIdAndUpdate(zone._id, zoneToUpdate, { new: true }).exec()
+    })
     .catch(error => {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     });

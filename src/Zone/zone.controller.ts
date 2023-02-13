@@ -3,10 +3,9 @@ import { ZoneService } from './zone.service';
 import { ZoneDto } from './ZoneDTO/zone.dto';
 import { Zone } from './Schema/zone.schema';
 import { JeuService } from 'src/Jeu/jeu.service';
-import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guards';
+import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guard';
 
 @Controller('zone')
-@UseGuards(JwtAuthGuard)
 export class ZoneController {
   constructor(private readonly zoneService: ZoneService, private readonly jeuService: JeuService) {}
 
@@ -26,6 +25,7 @@ export class ZoneController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   createZone(@Body() newZone: ZoneDto): Promise<Zone> {
     return this.zoneService.create(newZone)
@@ -34,14 +34,16 @@ export class ZoneController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(":id")
-  updateZone(@Param('id') id: string, @Body() zone: ZoneDto): Promise<Zone> {
+  update(@Param('id') id: string, @Body() zone: ZoneDto) {
     return this.zoneService.update(id, zone)
     .catch(error => {
       throw new HttpException(error.message, error.status);
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(":id")
   deleteZone(@Param('id') id: string): Promise<void> {
     return this.zoneService.delete(id)
@@ -58,19 +60,21 @@ export class ZoneController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':zoneId/addJeu/:jeuId')
-  async addJeuToZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string): Promise<Zone> {
+  addJeuToZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string): Promise<Zone> {
     return this.zoneService.addJeuToZone(zoneId, jeuId)
     .catch(error => {
       throw new HttpException(error.message, error.status);
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':zoneId/removeJeu/:jeuId')
-  async removeJeuFromZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string): Promise<Zone> {
+  removeJeuFromZone(@Param('zoneId') zoneId: string, @Param('jeuId') jeuId: string): Promise<Zone> {
     return this.zoneService.removeJeuFromZone(zoneId, jeuId)
     .catch(error => {
-      throw new HttpException(error.message, error.status);
+    throw new HttpException(error.message, error.status);
     });
   }
 

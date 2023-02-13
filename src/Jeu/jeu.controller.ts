@@ -1,15 +1,15 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guards';
+import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guard';
 import { JeuService } from './jeu.service';
 import { JeuDto } from './JeuDTO/jeu.dto';
 import { Jeu } from './Schema/jeu.schema';
 
 @Controller('jeu')
-@UseGuards(JwtAuthGuard)
 export class JeuController {
   constructor(private readonly jeuService: JeuService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   createJeu(@Body() newJeu: JeuDto): Promise<Jeu> {
     return this.jeuService.create(newJeu)
     .catch(error => {
@@ -18,6 +18,7 @@ export class JeuController {
   }
 
   @Put(":id")
+  @UseGuards(JwtAuthGuard)
   updateJeu(@Param('id') id: string, @Body() jeu: JeuDto): Promise<Jeu> {
     return this.jeuService.update(id, jeu)
     .catch(error => {
@@ -26,6 +27,7 @@ export class JeuController {
   }
 
   @Delete(":id")
+  @UseGuards(JwtAuthGuard)
   deleteJeu(@Param('id') id: string): Promise<void> {
     return this.jeuService.delete(id)
     .catch(error => {

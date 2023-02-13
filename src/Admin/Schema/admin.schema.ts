@@ -4,8 +4,11 @@ import { HydratedDocument } from 'mongoose';
 
 export type AdminDocument = HydratedDocument<Admin>;
 
-@Schema()
+@Schema({ collection: "Admin" })
 export class Admin {
+
+  _id: any;
+
   @Prop({required: true, unique: true})
   mailAdmin: string;
 

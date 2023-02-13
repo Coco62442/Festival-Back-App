@@ -4,7 +4,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type BenevoleDocument = HydratedDocument<Benevole>;
 
-@Schema({ collection: "Benevole"})
+@Schema({ collection: "Benevole" })
 export class Benevole {
 
   _id: any;

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AdminModule } from 'src/Admin/admin.module';
 import { BenevoleController } from './benevole.controller';
 import { BenevoleService } from './benevole.service';
 import { Benevole, BenevoleSchema } from './Schema/benevole.schema';

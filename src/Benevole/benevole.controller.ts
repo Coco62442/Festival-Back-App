@@ -1,41 +1,42 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guards';
+import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guard';
 import { BenevoleService } from './benevole.service';
 import { BenevoleDto } from './BenevoleDTO/benevole.dto';
-import { Benevole } from './Schema/benevole.schema';
+import { BenevoleReturn } from './BenevoleDTO/benevoleReturn';
+
 
 @Controller('benevole')
-@UseGuards(JwtAuthGuard)
 export class BenevoleController {
   constructor(private readonly benevoleService: BenevoleService) {}
 
   @Get()
-  getAllBenevoles(): Promise<Benevole[]> {
+  getAllBenevoles(): Promise<BenevoleReturn[]> {
     return this.benevoleService.findAll()
     .catch(error => {
       throw new HttpException(error.message, error.status);
     });
   }
 
-  @Get(':id')
-  getBenevoleById(@Param('id') id: string): Promise<Benevole> {
-    return this.benevoleService.findOne(id)
-    .catch(error => {
-      throw new HttpException(error.message, error.status);
-    });
-  }
-
-  @Get('nouveaux/nonvalider')
-  getNewsBenevoles(): Promise<Benevole[]> {
+  @Get('nouveaux')
+  @UseGuards(JwtAuthGuard)
+  getNewsBenevoles(): Promise<BenevoleReturn[]> {
     return this.benevoleService.newBenevoles()
     .catch(error => {
       throw new HttpException(error.message, error.status)
     })
   }
 
+  @Get(':id')
+  getBenevoleById(@Param('id') id: string): Promise<BenevoleReturn> {
+    return this.benevoleService.findOne(id)
+    .catch(error => {
+      throw new HttpException(error.message, error.status);
+    });
+  }
+
   @Post()
-  createBenevole(@Body() newBenevole: BenevoleDto): Promise<Benevole> {
+  @UseGuards(JwtAuthGuard)
+  createBenevole(@Body() newBenevole: BenevoleDto): Promise<BenevoleReturn> {
     return this.benevoleService.create(newBenevole)
     .catch(error => {
       throw new HttpException(error.message, error.status);
@@ -43,7 +44,8 @@ export class BenevoleController {
   }
 
   @Put(':id')
-  updateBenevole(@Param('id') id: string, @Body() benevole: BenevoleDto): Promise<Benevole> {
+  @UseGuards(JwtAuthGuard)
+  updateBenevole(@Param('id') id: string, @Body() benevole: BenevoleDto): Promise<BenevoleReturn> {
     return this.benevoleService.update(id, benevole)
     .catch(error => {
       throw new HttpException(error.message, error.status);
@@ -51,6 +53,7 @@ export class BenevoleController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   deleteBenevole(@Param('id') id: string): Promise<void> {
     return this.benevoleService.delete(id)
     .catch(error => {
@@ -59,7 +62,8 @@ export class BenevoleController {
   }
 
   @Put('validate/:id')
-  validateBenevole(@Param('id') id: string): Promise<Benevole> {
+  @UseGuards(JwtAuthGuard)
+  validateBenevole(@Param('id') id: string): Promise<BenevoleReturn> {
     return this.benevoleService.validateBenevole(id)
     .catch(error => {
       throw new HttpException(error.message, error.status);

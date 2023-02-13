@@ -1,11 +1,10 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guards';
+import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guard';
 import { AffectationService } from './affectation.service';
 import { AffectationDto } from './AffectationDTO/affectation.dto';
 import { Affectation } from './Schema/affectation.schema';
 
 @Controller('affectation')
-@UseGuards(JwtAuthGuard)
 export class AffectationController {
   constructor(private readonly affectationService: AffectationService) {}
 
@@ -42,6 +41,7 @@ export class AffectationController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   createAffectation(@Body() newAffectation: AffectationDto): Promise<Affectation> {
     return this.affectationService.create(newAffectation)
     .catch(error => {
@@ -50,6 +50,7 @@ export class AffectationController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
   updateAffectation(@Param('id') id: string, @Body() affectation: AffectationDto): Promise<Affectation> {
     return this.affectationService.update(id, affectation)
     .catch(error => {
@@ -58,6 +59,7 @@ export class AffectationController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   deleteAffectation(@Param('id') id: string): Promise<void> {
     return this.affectationService.delete(id)
     .catch(error => {
@@ -66,6 +68,7 @@ export class AffectationController {
   }
 
   @Post('addBenevole/:idAffectation/:idBenevole')
+  @UseGuards(JwtAuthGuard)
   addBenevoleToAffectation(@Param('idAffectation') idAffectation: string, @Param('idBenevole') idBenevole: string): Promise<Affectation> {
     return this.affectationService.addBenevole(idAffectation, idBenevole)
     .catch(error => {
@@ -74,6 +77,7 @@ export class AffectationController {
   }
 
   @Delete('removeBenevole/:idAffectation/:idBenevole')
+  @UseGuards(JwtAuthGuard)
   removeBenevoleFromAffectation(@Param('idAffectation') idAffectation: string, @Param('idBenevole') idBenevole: string): Promise<Affectation> {
     return this.affectationService.removeBenevole(idAffectation, idBenevole)
     .catch(error => {

@@ -5,9 +5,10 @@ import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './Strategy/passeport.jwt.strategy';
+import { AdminModule } from 'src/Admin/admin.module';
 
 @Module({
-  imports: [BenevoleModule, 
+  imports: [AdminModule, BenevoleModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({secret: 'secret', signOptions: {expiresIn: '1h'}})
   ],

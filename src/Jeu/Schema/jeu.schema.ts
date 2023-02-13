@@ -4,9 +4,11 @@ import { TypeJeu } from '../TypeJeu';
 
 export type JeuDocument = HydratedDocument<Jeu>;
 
-@Schema()
+@Schema({ collection: "Jeu" })
 export class Jeu {
 
+    _id: any;
+    
     @Prop({required: true})
     nomJeu: string;
     

@@ -2,12 +2,13 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { BenevoleService } from 'src/Benevole/benevole.service';
+import { AdminService } from 'src/Admin/admin.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     // private configService: ConfigService
-    private readonly BenevoleService: BenevoleService
+    private readonly adminService: AdminService
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -19,19 +20,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    return await this.BenevoleService.findOne(payload.benevole._id)
-    .then(benevole => {
-      return {
-        _id: benevole._id,
-        nomBenevole: benevole.nomBenevole,
-        prenomBenevole: benevole.prenomBenevole,
-        emailBenevole: benevole.emailBenevole,
-        telBenevole: benevole.telBenevole,
-        description: benevole.description
-      };
-    })
+    return await this.adminService.findOne(payload.admin._id)
     .catch(error => {
       throw new UnauthorizedException();
-    });    
+    });   
   }
 }
