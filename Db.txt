@@ -29,10 +29,64 @@
 }
 
  #################### TEST ####################
-idJeu
-63e27a77180ff99257625f5a
-63e2e14dfd4d3b76ae95fd32
-63e27a45180ff99257625f57
-id Zone
-63e28ac0fc2e96608ec308a9
-63e2dd4f16e95f7fe2800d75
+get Jeu
+
+{
+    "_id": "63e90b476cfcbc29d95fc13f",
+    "nomJeu": "loup garou noir gros",
+    "typeJeu": "Enfant",
+    "__v": 0
+},
+{
+    "_id": "63fa35746e5783137464a37a",
+    "nomJeu": "loup garou noir aussi mais avec extension",
+    "typeJeu": "Enfant",
+    "__v": 0
+},
+{
+    "_id": "63fa358a6e5783137464a37c",
+    "nomJeu": "Loto pour adulte",
+    "typeJeu": "Ambiance",
+    "__v": 0
+},
+{
+    "_id": "63fa359d6e5783137464a37e",
+    "nomJeu": "League of Legend",
+    "typeJeu": "Expert",
+    "__v": 0
+}
+
+
+
+get Zone
+
+{
+    "_id": "63e90d7be1f99513ec8e6114",
+    "nomZone": "MONTPELLIER à LA plage",
+    "jeux": [
+        {
+            "nomJeu": "loup garou noir gros",
+            "typeJeu": "Enfant",
+            "_id": "63e90b476cfcbc29d95fc13f"
+        }
+    ],
+    "__v": 0
+},
+{
+    "_id": "63e9207dc125f684c00f38e8",
+    "nomZone": "Montpellier",
+    "jeux": [],
+    "__v": 0
+},
+{
+    "_id": "63fa59b4c9a12a6a616ff9b2",
+    "nomZone": "GRENOBLE LA CITE",
+    "jeux": [],
+    "__v": 0
+},
+{
+    "_id": "63fa59bdc9a12a6a616ff9b4",
+    "nomZone": "kyzylorda du Kazakhstan",
+    "jeux": [],
+    "__v": 0
+}

@@ -72,3 +72,10 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](LICENSE).
 # Festival-Back-App
+
+
+### installation
+npm install bcrypt
+npm install class-validator
+## requetes avec axios
+npm install cors --save
