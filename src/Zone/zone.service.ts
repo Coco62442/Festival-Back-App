@@ -86,6 +86,11 @@ export class ZoneService {
     if (!jeu) {
       throw new NotFoundException('Jeu not found');
     }
+
+    if (zone.jeux.includes(jeu)) {
+      throw new HttpException('Jeu already in zone', HttpStatus.BAD_REQUEST);
+    }
+    
     zone.jeux.push(jeu);
     const updatedZone = await this.zoneModel.updateOne({ _id: zoneId }, zone);
     if(updatedZone.modifiedCount===0){
