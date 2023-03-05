@@ -91,7 +91,7 @@ export class BenevoleService {
 
   async findAll(): Promise<BenevoleReturn[]> {
     // TODO : ajouter {valider: true}
-    return this.benevoleModel.find({}, {mdpBenevole: 0}).exec()
+    return this.benevoleModel.find({ }, {mdpBenevole: 0}).exec()
     .then(benevoles => {
       return benevoles.map(benevole => {
         return {

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Patch, Param, Body, HttpException, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guard';
 import { BenevoleService } from './benevole.service';
 import { BenevoleDto } from './BenevoleDTO/benevole.dto';
