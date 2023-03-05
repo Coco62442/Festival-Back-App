@@ -27,9 +27,9 @@ export class BenevoleDto {
   @IsString()
   description?: string;
 
-  // @IsString()
-  // @IsNotEmpty()
-  // mdpBenevole: string;
+  @IsString()
+  @IsOptional()
+  mdpBenevole: string;
 
   @IsOptional()
   @IsBoolean()

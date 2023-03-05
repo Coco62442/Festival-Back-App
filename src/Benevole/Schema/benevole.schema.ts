@@ -24,7 +24,7 @@ export class Benevole {
   @Prop()
   description: string;
 
-  @Prop({required: true})
+  @Prop()
   mdpBenevole: string;
 
   @Prop({default: false})

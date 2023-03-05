@@ -35,7 +35,6 @@ export class BenevoleController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
   createBenevole(@Body() newBenevole: BenevoleDto): Promise<BenevoleReturn> {
     return this.benevoleService.create(newBenevole)
     .catch(error => {
