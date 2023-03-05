@@ -6,10 +6,10 @@ import { Benevole } from '../../Benevole/Schema/benevole.schema';
 
 export type AffectationDocument = mongoose.HydratedDocument<Affectation>;
 
-@Schema()
+@Schema({collection: "Affectation"})
 export class Affectation {
   @Prop({required: true})
-  heureDebut: Date;
+  heureDebut: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Zone', required: true })
   zone: Zone;

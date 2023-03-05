@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsEmail, IsPhoneNumber, IsOptional, IsEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsEmail, IsPhoneNumber, IsOptional, IsEmpty, IsBoolean } from 'class-validator';
 
 export class BenevoleDto {
 
@@ -27,10 +27,12 @@ export class BenevoleDto {
   @IsString()
   description?: string;
 
-  @IsString()
-  @IsNotEmpty()
-  mdpBenevole: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // mdpBenevole: string;
 
+  @IsOptional()
+  @IsBoolean()
   valider: boolean = false;
 
 }
