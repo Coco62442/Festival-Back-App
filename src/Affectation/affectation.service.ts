@@ -85,7 +85,7 @@ export class AffectationService {
       });
   }
 
-  async findByCreneau(creneau: Date): Promise<Affectation[]> {
+  async findByCreneau(creneau: string): Promise<Affectation[]> {
     return this.affectationModel.find({ heureDebut: creneau }).exec()
       .catch(error => {
         throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);

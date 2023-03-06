@@ -18,7 +18,7 @@ export class AffectationController {
   }
 
   @Get('ByCreneau')
-  getAffectationByCreneau(@Body() creneau: Date): Promise<Affectation[]> {
+  getAffectationByCreneau(@Body() creneau: string): Promise<Affectation[]> {
     return this.affectationService.findByCreneau(creneau)
       .catch(error => {
         throw new HttpException(error.message, error.status);
