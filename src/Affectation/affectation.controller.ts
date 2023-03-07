@@ -17,7 +17,7 @@ export class AffectationController {
       });
   }
 
-  @Get('ByCreneau')
+  @Post('ByCreneau/')
   getAffectationByCreneau(@Body() creneau: string): Promise<Affectation[]> {
     return this.affectationService.findByCreneau(creneau)
       .catch(error => {
@@ -25,7 +25,7 @@ export class AffectationController {
       });
   }
 
-  @Get('ByZone:idZone')
+  @Get('ByZone/:idZone')
   getAffectationByZone(@Param('idZone') idZone: string): Promise<Affectation[]> {
     return this.affectationService.findByZone(idZone)
       .catch(error => {
@@ -42,7 +42,7 @@ export class AffectationController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   createAffectation(@Body() newAffectation: AffectationDto): Promise<Affectation> {
     return this.affectationService.create(newAffectation)
       .catch(error => {

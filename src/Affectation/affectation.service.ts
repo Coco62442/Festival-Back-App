@@ -93,7 +93,7 @@ export class AffectationService {
   }
 
   async findByZone(idZone: string): Promise<Affectation[]> {
-    return this.affectationModel.find({ zone: idZone }).exec()
+    return this.affectationModel.find({ zone: {_id: idZone} }).exec()
       .catch(error => {
         throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
       });
