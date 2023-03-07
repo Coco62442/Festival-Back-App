@@ -22,9 +22,9 @@ async function bootstrap() {
   
   // Ajouter le middleware CORS ici
   app.use(cors({
-    origin: 'http://localhost:3001' // Permet uniquement les requêtes de http://localhost:3001
+    origin: '*' // Permet uniquement les requêtes de http://localhost:3000
   }));
   
-  await app.listen(3000);
+  await app.listen(3333);
 }
 bootstrap();
