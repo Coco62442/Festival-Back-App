@@ -3,6 +3,7 @@ import { JwtAuthGuard } from 'src/Authentification/Guards/auth.jwt.guard';
 import { AffectationService } from './affectation.service';
 import { AffectationDto } from './AffectationDTO/affectation.dto';
 import { AffectationBenevolesDto } from './AffectationDTO/AffectationBenevoles.dto';
+import { CreneauDto } from './AffectationDTO/creneau.dto';
 import { Affectation } from './Schema/affectation.schema';
 
 @Controller('affectation')
@@ -17,8 +18,9 @@ export class AffectationController {
       });
   }
 
-  @Post('ByCreneau/')
-  getAffectationByCreneau(@Body() creneau: string): Promise<Affectation[]> {
+
+  @Post('ByCreneau')
+  getAffectationByCreneau(@Body() creneau: CreneauDto): Promise<Affectation> {
     return this.affectationService.findByCreneau(creneau)
       .catch(error => {
         throw new HttpException(error.message, error.status);
